@@ -1,0 +1,20 @@
+<h1>New Reservation </h1>
+<Br>
+<tr><b>Flight Details</b></tr>
+<Br>
+<tr> Flight Number  : <%=Flight.find_by_id(@flight).flight_number %> </tr>
+<Br>
+<tr> Departure Date : <%=Flight.find_by_id(@flight).departure_date %> </tr>
+<Br>
+<tr> Origin         : <%=Flight.find_by_id(@flight).origin_airport %> </tr>
+<Br>
+<tr> Destination    : <%=Flight.find_by_id(@flight).destination_airport %> </tr>
+<Br>
+<tr> Cost           : <%=Flight.find_by_id(@flight).flight_price %> </tr>
+<Br>
+<Br>
+
+
+<%= render 'form', reservation: @reservation %>
+
+<%= link_to 'Back', reservations_path %>

@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>Phone number:</strong>
+  <%= @user.phone_number %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @user.address %>
+</p>
+
+<p>
+  <strong>Name on card:</strong>
+  <%= @user.name_on_card %>
+</p>
+
+<p>
+  <strong>Card number:</strong>
+  <%= @user.card_number %>
+</p>
+
+<p>
+  <strong>Expiration date:</strong>
+  <%= @user.expiration_date %>
+</p>
+
+<p>
+  <strong>Cvv:</strong>
+  <%= @user.cvv %>
+</p>
+
+<p>
+  <strong>Admin:</strong>
+  <%= @user.admin %>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

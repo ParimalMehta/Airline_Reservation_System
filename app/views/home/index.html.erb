@@ -1,0 +1,25 @@
+<p id=”notice”><%= notice %></p>
+<h1>Alpha Flight Booking Portal</h1>
+<p>Fly with pride</p>
+<% if current_user %>
+  Logged in as <%= current_user.name %>. <br><br>
+  <% if current_user.admin %>
+    <%= link_to 'View or Edit user information', users_path %><br>
+    <%= link_to 'Add or Remove Airport ', airports_path %><br>
+     <%= link_to 'Book new flight', '/bookaflight' %><br>
+    <%= link_to 'Manage flights', flights_path %><br>
+    <%= link_to 'View All reservations', reservations_path %><br>
+    <%= link_to 'View Feedback', feedbacks_path %><br>
+
+  <% else %>
+    <%= link_to 'View or Edit your information', users_path %><br>
+    <%= link_to 'Book new flight', '/bookaflight' %><br>
+    <%= link_to 'View your reservations', reservations_path %><br>
+    <%= link_to 'View Feedback', feedbacks_path %><br>
+
+  <% end %>
+  <%= link_to "Logout", 'logout' %><br>
+<% else %>
+  <%= link_to "Signup", 'signup' %> or
+  <%= link_to "Login", 'login' %>
+<% end %>

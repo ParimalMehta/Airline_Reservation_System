@@ -1,0 +1,52 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Feedbacks</h1>
+
+<%if current_user && current_user.admin %>
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Flight Number</th>
+      <th>Feedback response</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @feedbacks.each do |feedback| %>
+      <tr>
+        <td><%= User.find_by_id(feedback.user_id).name %></td>
+        <td><%= Flight.find_by_id(feedback.flight_id).flight_number %></td>
+        <td><%= feedback.feedback_response %></td>
+        <td><%= link_to 'Show', feedback %></td>
+        <td><%= link_to 'Edit', edit_feedback_path(feedback) %></td>
+        <td><%= link_to 'Destroy', feedback, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%else current_user%>
+  <table>
+    <thead>
+    <tr>
+      <th>Flight Number</th>
+      <th>Feedback response</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @feedbacks.each do |feedback| %>
+      <% if current_user.id == feedback.user_id %>
+      <tr>
+        <td><%= Flight.find_by_id(feedback.flight_id).flight_number %></td>
+        <td><%= feedback.feedback_response %></td>
+        <td><%= link_to 'Show', feedback %></td>
+        <td><%= link_to 'Edit', edit_feedback_path(feedback) %></td>
+        <td><%= link_to 'Destroy', feedback, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+    <% end %>
+    </tbody>
+  </table>
+<%end %>

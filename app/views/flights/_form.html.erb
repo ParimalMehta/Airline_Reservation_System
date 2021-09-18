@@ -1,0 +1,52 @@
+<%= form_with(model: flight) do |form| %>
+  <% if flight.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(flight.errors.count, "error") %> prohibited this flight from being saved:</h2>
+
+      <ul>
+        <% flight.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :flight_number %>
+    <%= form.text_field :flight_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :origin_airport %>
+    <%= form.select(:origin_airport, options_for_select(@airport)) %>
+  </div>
+
+  <div class="field">
+    <%= form.label :destination_airport %>
+    <%= form.select(:destination_airport, options_for_select(@airport)) %>
+  </div>
+
+  <div class="field">
+    <%= form.label :departure_date %>
+    <%= form.date_select :departure_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :departure_time %>
+    <%= form.time_select :departure_time %>
+  </div>
+
+  <div class="field">
+    <%= form.label :flight_capacity %>
+    <%= form.number_field :flight_capacity %>
+  </div>
+
+  <div class="field">
+    <%= form.label :flight_price %>
+    <%= form.number_field :flight_price %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

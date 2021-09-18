@@ -1,0 +1,192 @@
+<p id="notice"><%= notice %></p>
+
+
+
+<%if @temp.nil? %>
+<%if current_user && current_user.admin %>
+
+    <h1>Reservations :: Admin Access</h1>
+    <h1>Upcoming Flights</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Confirmation number</th>
+      <th>Class</th>
+      <th>Number of seats</th>
+      <th>UserName</th>
+      <th>Flight Number</th>
+      <th>Departure Date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <% @reservations.each do |reservation| %>
+    <% if Flight.find_by_id(reservation.flight_id).departure_date > Date.today %>
+
+      <tr>
+        <td><%= reservation.confirmation_number %></td>
+        <td><%= reservation.flight_class %></td>
+        <td><%= reservation.number_of_seats %></td>
+        <td><%= User.find_by_id(reservation.user_id).name %></td>
+        <td><%= Flight.find_by_id(reservation.flight_id).flight_number %></td>
+        <td><%= Flight.find_by_id(reservation.flight_id).departure_date %></td>
+        <td><%= link_to 'Show', reservation %></td>
+        <%# <td><%= link_to 'Edit', edit_reservation_path(reservation) %>
+        <td><%= link_to 'Destroy', reservation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Give Feedback', new_feedback_path(:flight_id => reservation.flight_id, :user_id => 1) %></td>
+
+      </tr>
+    <% end %>
+    <%end %>
+  </tbody>
+</table>
+    <h1>Departed Flights</h1>
+    <table>
+      <thead>
+      <tr>
+        <th>Confirmation number</th>
+        <th>Class</th>
+        <th>Number of seats</th>
+        <th>UserName</th>
+        <th>Flight Number</th>
+        <th>Departure Date</th>
+        <th colspan="3"></th>
+      </tr>
+      </thead>
+
+      <tbody>
+
+      <% @reservations.each do |reservation| %>
+        <% if Flight.find_by_id(reservation.flight_id).departure_date < Date.today %>
+
+        <tr>
+          <td><%= reservation.confirmation_number %></td>
+          <td><%= reservation.flight_class %></td>
+          <td><%= reservation.number_of_seats %></td>
+          <td><%= User.find_by_id(reservation.user_id).name %></td>
+          <td><%= Flight.find_by_id(reservation.flight_id).flight_number %></td>
+          <td><%= Flight.find_by_id(reservation.flight_id).departure_date %></td>
+          <td><%= link_to 'Show', reservation %></td>
+          <%# <td><%= link_to 'Edit', edit_reservation_path(reservation) %>
+          <td><%= link_to 'Destroy', reservation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Give Feedback', new_feedback_path(:flight_id => reservation.flight_id, :user_id => 1) %></td>
+
+        </tr>
+      <% end %>
+        <%end  %>
+      </tbody>
+    </table>
+
+
+  <% else current_user %>
+    <h1>Reservations :: <%= current_user.name  %> </h1>
+
+    <h1>Upcoming Flights</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>Confirmation number</th>
+      <th>Class</th>
+      <th>Number of seats</th>
+      <th>Flight Number</th>
+      <th>Departure Date</th>
+      <th colspan="3"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <% @reservations.each do |reservation| %>
+    <% if current_user.id == reservation.user_id %>
+        <% if Flight.find_by_id(reservation.flight_id).departure_date > Date.today %>
+      <tr>
+        <td><%= reservation.confirmation_number %></td>
+        <td><%= reservation.flight_class %></td>
+        <td><%= reservation.number_of_seats %></td>
+        <td><%= Flight.find_by_id(reservation.flight_id).flight_number %></td>
+        <td><%= Flight.find_by_id(reservation.flight_id).departure_date %></td>
+        <td><%= link_to 'Show', reservation %></td>
+        <%# <td><%= link_to 'Edit', edit_reservation_path(reservation) %>       
+        <td><%= link_to 'Destroy', reservation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+<!--        <td><%#= link_to 'Give Feedback', new_feedback_path(:flight_id => reservation.flight_id, :user_id => reservation.user_id) %></td>-->
+        <%end %>
+
+      </tr>
+    <%end %>
+    <% end %>
+    </tbody>
+  </table>
+    <h1>Departed Flights</h1>
+    <table>
+      <thead>
+      <tr>
+        <th>Confirmation number</th>
+        <th>Class</th>
+        <th>Number of seats</th>
+        <th>Flight Number</th>
+        <th>Departure Date</th>
+        <th colspan="3"></th>
+      </tr>
+      </thead>
+
+      <tbody>
+
+      <% @reservations.each do |reservation| %>
+        <% if current_user.id == reservation.user_id %>
+          <% if Flight.find_by_id(reservation.flight_id).departure_date < Date.today %>
+            <tr>
+              <td><%= reservation.confirmation_number %></td>
+              <td><%= reservation.flight_class %></td>
+              <td><%= reservation.number_of_seats %></td>
+              <td><%= Flight.find_by_id(reservation.flight_id).flight_number %></td>
+              <td><%= Flight.find_by_id(reservation.flight_id).departure_date %></td>
+              <td><%= link_to 'Show', reservation %></td>
+              <%# <td><%= link_to 'Edit', edit_reservation_path(reservation) %>
+              <td><%= link_to 'Destroy', reservation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <td><%= link_to 'Give Feedback', new_feedback_path(:flight_id => reservation.flight_id, :user_id => reservation.user_id) %></td>
+          <%end %>
+
+          </tr>
+        <%end %>
+      <% end %>
+      </tbody>
+    </table>
+  <%end %>
+
+<%else %>
+  <h1>Reservations</h1>
+  <td><b>For Flight No: <%= Flight.find_by_id(@temp.to_i).flight_number  %></b></td>
+  <br>
+  <br>
+
+  <table>
+    <thead>
+    <tr>
+      <th>UserName</th>
+      <th>Confirmation number</th>
+      <th>Class</th>
+      <th>Number of seats</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @reservations.each do |reservation| %>
+      <% if reservation.flight_id == @temp.to_i %>
+        <tr>
+        <td><%= User.find_by_id(reservation.user_id).name %></td>
+        <td><%= reservation.confirmation_number %></td>
+        <td><%= reservation.flight_class %></td>
+        <td><%= reservation.number_of_seats %></td>
+      <%end %>
+      <%end %>
+
+    </tbody>
+  </table>
+  <br>
+  <td><%= link_to 'Back', flights_path %></td>
+
+
+  <%end %>
+
+<br>
